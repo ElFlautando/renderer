@@ -16,4 +16,4 @@ target_link_libraries(
 )
 ]]
 
-add_library(fasas::core ALIAS fasas_core)
+add_library(renderer::core ALIAS renderer_core)
