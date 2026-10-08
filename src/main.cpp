@@ -1,6 +1,6 @@
 
 #include "Breseham.hpp"
-#include "MeshManager.hpp"
+#include "Mesh.hpp"
 #include <ios>
 #include <spdlog/spdlog.h>
 #include <vector>
@@ -32,7 +32,7 @@ auto main() -> int
 {
     auto buffer = std::vector<std::vector<int>>(100, std::vector<int>(100));
 
-    auto mesh_mgr = renderer::core::MeshManager({ { 1, 1.5, 4 }, { 4, 2, 1 }, { 2, -3, 2.3 } }, { { 0, 1, 2 } });
+    auto mesh_mgr = renderer::core::Mesh({ { 1, 1.5, 4 }, { 4, 2, 1 }, { 2, -3, 2.3 } }, { { 0, 1, 2 } });
 
     // parallel
 

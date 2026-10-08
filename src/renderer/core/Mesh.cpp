@@ -1,9 +1,10 @@
-#include "MeshManager.hpp"
+#include "Mesh.hpp"
+#include "PrimitiveGeometry.hpp"
 
 namespace renderer::core
 {
 
-    auto MeshManager::get_triangle(std::size_t triangle_idx) -> Triangle
+    auto Mesh::get_triangle(std::size_t triangle_idx) -> Triangle
     {
 
         auto tri = Triangle{};
