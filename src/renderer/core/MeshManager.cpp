@@ -9,7 +9,7 @@ namespace renderer::core
         auto tri = Triangle{};
 
         const auto& verts_idx = tris_[triangle_idx];
-        tri.verts = { verts_[verts_idx[0]], verts_[verts_idx[0]], verts_[verts_idx[0]] };
+        tri.verts = { verts_[verts_idx.x], verts_[verts_idx.y], verts_[verts_idx.z] };
 
         return tri;
     }

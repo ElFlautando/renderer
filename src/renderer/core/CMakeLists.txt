@@ -1,12 +1,12 @@
 add_library(renderer_core)
 target_sources(
     renderer_core
-    PRIVATE Breseham.cpp
+    PRIVATE Breseham.cpp MeshManager.cpp
     PUBLIC
         FILE_SET publicHeaders
             TYPE HEADERS
             BASE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}
-            FILES Breseham.hpp 
+            FILES Breseham.hpp Mesh.hpp MeshManager.hpp
 )
 
 #[[

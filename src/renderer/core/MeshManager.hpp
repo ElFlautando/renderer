@@ -1,6 +1,7 @@
 #pragma once
 
-#include <array>
+#include "Mesh.hpp"
+#include <cstddef>
 #include <span>
 #include <utility>
 #include <vector>
@@ -8,25 +9,14 @@
 namespace renderer::core
 {
 
-    // TODO : Move to file
-    template <typename T>
-    using Point3 = std::array<T, 3>;
-
-    using Point3f = Point3<float>;
-    using Point3i = Point3<int>;
-
-    struct Triangle
-    {
-        std::array<Point3f, 3> verts;
-    };
-
     class MeshManager
     {
       public:
         MeshManager() = default;
 
-        explicit MeshManager(std::vector<Point3f>&& verts)
-            : verts_{ std::move(verts) } {};
+        explicit MeshManager(std::vector<Point3f>&& verts, std::vector<Point3i>&& tris)
+            : verts_{ std::move(verts) }
+            , tris_{ std::move(tris) } {};
 
         // TODO : void overwrite_vertices(std::vector<Point3f>&& verts) { verts_ = std::move(verts); }
 
