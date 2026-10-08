@@ -3,16 +3,16 @@
 #include <cstdlib>
 #include <ranges>
 
-void renderer::core::breseham(std::vector<std::vector<int>>& buffer, int x1, int y1, int x2, int y2)
+void renderer::core::breseham(std::vector<std::vector<int>>& buffer, int x0, int y0, int x1, int y1)
 {
-    auto dx = x2 - x1;
-    auto dy = y2 - y1;
+    auto dx = x1 - x0;
+    auto dy = y1 - y0;
 
     const auto incx = std::copysign(1, dx);
     const auto incy = std::copysign(1, dy);
 
-    dx = std::abs(x2 - x1);
-    dy = std::abs(y2 - y1);
+    dx = std::abs(x1 - x0);
+    dy = std::abs(y1 - y0);
 
     const auto ddx = incx;
     const auto ddy = incy;
@@ -38,8 +38,8 @@ void renderer::core::breseham(std::vector<std::vector<int>>& buffer, int x1, int
         delta_fast = dy;
     }
 
-    auto x = x1;
-    auto y = y1;
+    auto x = x0;
+    auto y = y0;
     auto err = delta_fast / 2;
     buffer[x][y] = 255;
 

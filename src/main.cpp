@@ -1,7 +1,7 @@
 
 #include "Breseham.hpp"
 #include "MeshManager.hpp"
-#include <ranges>
+#include <ios>
 #include <spdlog/spdlog.h>
 #include <vector>
 
@@ -38,13 +38,15 @@ auto main() -> int
 
     const auto trg = mesh_mgr.get_triangle(0);
     renderer::core::breseham(
-        buffer, 4 * trg.verts[0].y + 50, 4 * trg.verts[1].y + 50, 4 * trg.verts[0].z + 50, 4 * trg.verts[1].z + 50);
+        buffer, 4 * trg.verts[0].y + 50, 4 * trg.verts[0].z + 50, 4 * trg.verts[1].y + 50, 4 * trg.verts[1].z + 50);
     renderer::core::breseham(
-        buffer, 4 * trg.verts[1].y + 50, 4 * trg.verts[2].y + 50, 4 * trg.verts[1].z + 50, 4 * trg.verts[2].z + 50);
+        buffer, 4 * trg.verts[1].y + 50, 4 * trg.verts[1].z + 50, 4 * trg.verts[2].y + 50, 4 * trg.verts[2].z + 50);
     renderer::core::breseham(
-        buffer, 4 * trg.verts[2].y + 50, 4 * trg.verts[0].y + 50, 4 * trg.verts[2].z + 50, 4 * trg.verts[0].z + 50);
+        buffer, 4 * trg.verts[2].y + 50, 4 * trg.verts[2].z + 50, 4 * trg.verts[0].y + 50, 4 * trg.verts[0].z + 50);
 
     save_pgm("test.ppm", buffer);
+
+    spdlog::info("Exited sucessfully");
 
     return 0;
 }

@@ -4,5 +4,5 @@
 
 namespace renderer::core
 {
-    void breseham(std::vector<std::vector<int>>& buffer, int x1, int y1, int x2, int y2);
+    void breseham(std::vector<std::vector<int>>& buffer, int x0, int y0, int x1, int y1);
 } // namespace renderer::core
