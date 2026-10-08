@@ -1,5 +1,7 @@
 
 #include "Breseham.hpp"
+#include "MeshManager.hpp"
+#include <ranges>
 #include <spdlog/spdlog.h>
 #include <vector>
 
@@ -30,21 +32,17 @@ auto main() -> int
 {
     auto buffer = std::vector<std::vector<int>>(100, std::vector<int>(100));
 
+    auto mesh_mgr = renderer::core::MeshManager({ { 1, 1.5, 4 }, { 4, 2, 1 }, { 2, -3, 2.3 } }, { { 0, 1, 2 } });
+
     // parallel
-    renderer::core::breseham(buffer, 50, 50, 50, 25);
-    renderer::core::breseham(buffer, 50, 50, 50, 75);
-    renderer::core::breseham(buffer, 50, 50, 25, 50);
-    renderer::core::breseham(buffer, 50, 50, 75, 50);
 
-    // diagonal
-    renderer::core::breseham(buffer, 50, 50, 25, 25);
-    renderer::core::breseham(buffer, 50, 50, 75, 75);
-    renderer::core::breseham(buffer, 50, 50, 25, 75);
-    renderer::core::breseham(buffer, 50, 50, 75, 25);
-
-    // random
-    renderer::core::breseham(buffer, 54, 25, 14, 5);
-    renderer::core::breseham(buffer, 8, 6, 68, 99);
+    const auto trg = mesh_mgr.get_triangle(0);
+    renderer::core::breseham(
+        buffer, 4 * trg.verts[0].y + 50, 4 * trg.verts[1].y + 50, 4 * trg.verts[0].z + 50, 4 * trg.verts[1].z + 50);
+    renderer::core::breseham(
+        buffer, 4 * trg.verts[1].y + 50, 4 * trg.verts[2].y + 50, 4 * trg.verts[1].z + 50, 4 * trg.verts[2].z + 50);
+    renderer::core::breseham(
+        buffer, 4 * trg.verts[2].y + 50, 4 * trg.verts[0].y + 50, 4 * trg.verts[2].z + 50, 4 * trg.verts[0].z + 50);
 
     save_pgm("test.ppm", buffer);
 
