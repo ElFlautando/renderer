@@ -1,6 +1,8 @@
 
 #include "Breseham.hpp"
+#include "Loader.hpp"
 #include "Mesh.hpp"
+#include <filesystem>
 #include <ios>
 #include <spdlog/spdlog.h>
 #include <vector>
@@ -30,6 +32,11 @@ void save_pgm(const char* filename, const std::vector<std::vector<int>>& pixels)
 
 auto main() -> int
 {
+
+    auto loader = renderer::core::Loader{};
+    loader.load(std::filesystem::path("./teapot.obj"));
+
+    exit(0);
     auto buffer = std::vector<std::vector<int>>(100, std::vector<int>(100));
 
     auto mesh_mgr = renderer::core::Mesh({ { 1, 1.5, 4 }, { 4, 2, 1 }, { 2, -3, 2.3 } }, { { 0, 1, 2 } });
