@@ -11,7 +11,7 @@ target_sources(
 
 target_link_libraries(
     renderer_core
-    PUBLIC spdlog::spdlog
+    PUBLIC spdlog::spdlog renderer::utils
 )
 
 add_library(renderer::core ALIAS renderer_core)

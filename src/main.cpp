@@ -2,12 +2,10 @@
 #include "Breseham.hpp"
 #include "Loader.hpp"
 #include "Mesh.hpp"
-#include "StringUtils.hpp"
 #include <filesystem>
 #include <ios>
 #include <iostream>
 #include <spdlog/spdlog.h>
-#include <string_view>
 #include <vector>
 
 #include <fstream>
@@ -35,14 +33,6 @@ void save_pgm(const char* filename, const std::vector<std::vector<int>>& pixels)
 
 auto main() -> int
 {
-
-    auto vvv = std::vector<std::string_view>{};
-    vvv.reserve(6);
-
-    renderer::utils::split_string("v 0.524218  0.005902 -0.307888", ' ', vvv);
-    spdlog::info("Splits: {}", vvv);
-
-    exit(999);
 
     auto loader = renderer::core::Loader{};
     loader.load(std::filesystem::path("./teapot.obj"));

@@ -3,30 +3,16 @@
 #include "PrimitiveGeometry.hpp"
 #include <filesystem>
 #include <fstream>
-#include <iostream>
-#include <ranges>
 #include <spdlog/spdlog.h>
 #include <string>
 #include <string_view>
 #include <utility>
 #include <vector>
 
+#include "StringUtils.hpp"
+
 namespace renderer::core
 {
-
-    void split(std::string_view string)
-    {
-
-        constexpr auto delim = ' ';
-        string = "v 0.524218 0.005902 -0.307888";
-
-        auto delim_iter = std::views::split(string, delim);
-
-        for (const auto split : delim_iter)
-        {
-            std::cout << static_cast<std::string_view>(split) << "\n";
-        }
-    };
 
     auto Loader::load(const std::filesystem::path& file_path) -> Mesh
     {
@@ -36,6 +22,8 @@ namespace renderer::core
 
         std::ifstream file(file_path.string());
 
+        auto buffer_whitespace = std::vector<std::string_view>{};
+
         if (file.is_open())
         {
             auto line = std::string{};
@@ -44,9 +32,14 @@ namespace renderer::core
 
             while (std::getline(file, line))
             {
-                auto iss = std::istringstream(line);
-                iss >> code >> data;
-                spdlog::info("Code: {}", code);
+                // Skip comments
+                if (line[0] == '#')
+                {
+                    continue;
+                }
+
+                renderer::utils::split_string(line, ' ', buffer_whitespace);
+                spdlog::info("splits: {}", buffer_whitespace);
             }
         }
 
