@@ -2,10 +2,12 @@
 #include "Breseham.hpp"
 #include "Loader.hpp"
 #include "Mesh.hpp"
+#include "StringUtils.hpp"
 #include <filesystem>
 #include <ios>
 #include <iostream>
 #include <spdlog/spdlog.h>
+#include <string_view>
 #include <vector>
 
 #include <fstream>

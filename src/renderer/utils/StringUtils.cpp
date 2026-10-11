@@ -1,6 +1,7 @@
 #include "StringUtils.hpp"
 
 #include <charconv>
+#include <optional>
 #include <ranges>
 #include <spdlog/spdlog.h>
 #include <string_view>
@@ -9,6 +10,8 @@
 
 namespace renderer::utils
 {
+    using std::optional;
+
     auto split_string(std::string_view string, char delim) -> std::vector<std::string_view>
     {
         return string | std::views::split(delim) |
@@ -27,15 +30,16 @@ namespace renderer::utils
         }
     }
 
-    auto strof(std::string_view str) -> std::optional<float>
+    auto strof(std::string_view str) -> optional<float>
     {
         auto res = float{};
         auto [ptr, ec] = std::from_chars(str.begin(), str.end(), res);
 
         if (ec == std::errc())
         {
-            spdlog::error("Could not parse string to float.");
+            return res;
         }
-        return res;
+        spdlog::error("Could not parse string to float.");
+        return std::nullopt;
     }
 } // namespace renderer::utils

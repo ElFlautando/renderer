@@ -1,5 +1,7 @@
 #pragma once
 #include <filesystem>
+#include <span>
+#include <string_view>
 
 namespace renderer::core
 {
@@ -12,6 +14,6 @@ namespace renderer::core
 
       private:
         static void parse_vertices(std::span<std::string_view> verts_str);
-        static void parse_faces(std::span<std::string_view>);
+        static void parse_faces(std::span<std::string_view> faces_str);
     };
 } // namespace renderer::core

@@ -3,6 +3,7 @@
 #include "PrimitiveGeometry.hpp"
 #include <filesystem>
 #include <fstream>
+#include <span>
 #include <spdlog/spdlog.h>
 #include <string>
 #include <string_view>
@@ -41,14 +42,13 @@ namespace renderer::core
 
                 renderer::utils::split_string(line, ' ', buffer_whitespace);
                 const auto& command = buffer_whitespace[0];
-                const auto& data_string =
-                    std::span<std::string_view>(buffer_whitespace).subspan(1, buffer_whitespace.size());
+                const auto& data_str_vec = std::span<std::string_view>(buffer_whitespace).subspan(1);
 
                 // TODO :: Check if size of buffer is not too small or to large -> Error
 
                 if (command == "v")
                 {
-                    parse_vertices(buffer_whitespace);
+                    parse_vertices(data_str_vec);
                 }
                 else if (command == "vn")
                 {
@@ -57,11 +57,11 @@ namespace renderer::core
                 }
                 else if (command == "f")
                 {
-                    spdlog::info("Load face");
+                    parse_faces(data_str_vec);
                 }
                 else
                 {
-                    spdlog::error("Unknown obj command while loading.");
+                    spdlog::error("Unknown obj command: {} while parsing.", command);
                 }
             }
         }
@@ -79,9 +79,20 @@ namespace renderer::core
 
         for (const auto vert_str : verts_str)
         {
-
-            const auto test = std::string_view{ "1.2" };
-            spdlog::info("Loaded vertex {}", std::stof(test));
+            // TODO : connect to mesh
+            // spdlog::info("Append vertex: {}", *renderer::utils::strof(vert_str));
         }
     }
+
+    void Loader::parse_faces(std::span<std::string_view> faces_str)
+    {
+
+        spdlog::info(" face array: {}", faces_str);
+        for (const auto face_str : faces_str)
+        {
+            const  auto value = *renderer::utils::strof(face_str);
+            spdlog::info("Append face: {}", value);
+        }
+    }
+
 } // namespace renderer::core
