@@ -1,7 +1,10 @@
 #include "StringUtils.hpp"
 
+#include <charconv>
 #include <ranges>
+#include <spdlog/spdlog.h>
 #include <string_view>
+#include <system_error>
 #include <vector>
 
 namespace renderer::utils
@@ -24,4 +27,15 @@ namespace renderer::utils
         }
     }
 
+    auto strof(std::string_view str) -> std::optional<float>
+    {
+        auto res = float{};
+        auto [ptr, ec] = std::from_chars(str.begin(), str.end(), res);
+
+        if (ec == std::errc())
+        {
+            spdlog::error("Could not parse string to float.");
+        }
+        return res;
+    }
 } // namespace renderer::utils

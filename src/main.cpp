@@ -35,7 +35,7 @@ auto main() -> int
 {
 
     auto loader = renderer::core::Loader{};
-    loader.load(std::filesystem::path("./teapot.obj"));
+    renderer::core::Loader::load(std::filesystem::path("./teapot.obj"));
 
     exit(99);
     auto buffer = std::vector<std::vector<int>>(100, std::vector<int>(100));

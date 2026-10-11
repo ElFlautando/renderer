@@ -10,4 +10,6 @@ namespace renderer::utils
 
     void split_string(std::string_view string, char delim, std::vector<std::string_view>& out);
 
+    auto strof(std::string_view str);
+
 } // namespace renderer::utils
