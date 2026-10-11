@@ -3,14 +3,30 @@
 #include "PrimitiveGeometry.hpp"
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <ranges>
 #include <spdlog/spdlog.h>
 #include <string>
+#include <string_view>
 #include <utility>
 #include <vector>
 
 namespace renderer::core
 {
+
+    void split(std::string_view string)
+    {
+
+        constexpr auto delim = ' ';
+        string = "v 0.524218 0.005902 -0.307888";
+
+        auto delim_iter = std::views::split(string, delim);
+
+        for (const auto split : delim_iter)
+        {
+            std::cout << static_cast<std::string_view>(split) << "\n";
+        }
+    };
 
     auto Loader::load(const std::filesystem::path& file_path) -> Mesh
     {
