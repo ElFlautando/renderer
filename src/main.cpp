@@ -35,6 +35,11 @@ void save_pgm(const char* filename, const std::vector<std::vector<int>>& pixels)
 
 auto main() -> int
 {
+    // auto buffer_d = std::vector<std::string_view>{};
+    //
+    // renderer::utils::split_string("4//9", '/', buffer_d);
+    // spdlog::info("Face splits face: {}", buffer_d);
+    // exit(999);
 
     auto loader = renderer::core::Loader{};
     renderer::core::Loader::load(std::filesystem::path("./teapot.obj"));

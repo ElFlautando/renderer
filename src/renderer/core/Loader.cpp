@@ -24,6 +24,9 @@ namespace renderer::core
         std::ifstream file(file_path.string());
 
         auto buffer_whitespace = std::vector<std::string_view>{};
+        buffer_whitespace.reserve(5);
+        auto buffer_data = std::vector<std::string_view>{};
+        buffer_data.reserve(4);
 
         spdlog::info("Loader start");
         if (file.is_open())
@@ -41,14 +44,16 @@ namespace renderer::core
                 }
 
                 renderer::utils::split_string(line, ' ', buffer_whitespace);
+                // TODO : Does it make sense to move the following two lines outside of the loop? Is that even possible
+                // as they are just references?
                 const auto& command = buffer_whitespace[0];
-                const auto& data_str_vec = std::span<std::string_view>(buffer_whitespace).subspan(1);
+                const auto data_str_vec = std::span<const std::string_view>(buffer_whitespace).subspan(1);
 
                 // TODO :: Check if size of buffer is not too small or to large -> Error
 
                 if (command == "v")
                 {
-                    parse_vertices(data_str_vec);
+                    parse_vertices(data_str_vec, verts);
                 }
                 else if (command == "vn")
                 {
@@ -57,7 +62,7 @@ namespace renderer::core
                 }
                 else if (command == "f")
                 {
-                    parse_faces(data_str_vec);
+                    parse_faces(data_str_vec, buffer_data);
                 }
                 else
                 {
@@ -74,24 +79,31 @@ namespace renderer::core
         return Mesh(std::move(verts), std::move(tris));
     }
 
-    void Loader::parse_vertices(std::span<std::string_view> verts_str)
+    void Loader::parse_vertices(std::span<const std::string_view> verts_str, std::vector<Point3f> verts)
     {
 
-        for (const auto vert_str : verts_str)
-        {
-            // TODO : connect to mesh
-            // spdlog::info("Append vertex: {}", *renderer::utils::strof(vert_str));
-        }
+        // TODO : Besure that here only 3 verts exist
+        // FIXME : Unsafe conversion. Check optional
+
+        auto vert = Point3f{};
+        vert.x = *renderer::utils::strof(verts_str[0]);
+        vert.y = *renderer::utils::strof(verts_str[1]);
+        vert.z = *renderer::utils::strof(verts_str[2]);
+
+        verts.emplace_back(vert);
     }
 
-    void Loader::parse_faces(std::span<std::string_view> faces_str)
+    void Loader::parse_faces(std::span<const std::string_view> faces_str, std::vector<std::string_view>& buffer_data)
     {
 
-        spdlog::info(" face array: {}", faces_str);
         for (const auto face_str : faces_str)
         {
-            const  auto value = *renderer::utils::strof(face_str);
-            spdlog::info("Append face: {}", value);
+            // FIXME: There is no difference in parsing for idx/tex and idx//norm
+            // TODO: If arr only one element then idx or 3 with idx/tex/norm other method
+
+            spdlog::info("Unparsed split {}", face_str);
+            renderer::utils::split_string(face_str, '/', buffer_data);
+            spdlog::info("Face splits face: {}", buffer_data);
         }
     }
 
