@@ -1,4 +1,3 @@
-
 #include "Breseham.hpp"
 #include "Loader.hpp"
 #include "Mesh.hpp"
@@ -42,7 +41,13 @@ auto main() -> int
     // exit(999);
 
     auto loader = renderer::core::Loader{};
-    renderer::core::Loader::load(std::filesystem::path("./teapot.obj"));
+    auto mesh1 = renderer::core::Loader::load(std::filesystem::path("./teapot.obj"));
+
+    spdlog::info("Tri 0 {}", mesh1.get_triangle(0));
+    spdlog::info("Tri 1 {}", mesh1.get_triangle(1));
+    spdlog::info("Tri 2 {}", mesh1.get_triangle(2));
+
+    spdlog::info("Loaded obj.");
 
     exit(99);
     auto buffer = std::vector<std::vector<int>>(100, std::vector<int>(100));

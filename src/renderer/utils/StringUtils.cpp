@@ -42,4 +42,16 @@ namespace renderer::utils
         spdlog::error("Could not parse string to float.");
         return std::nullopt;
     }
+    auto stroi(std::string_view str) -> optional<int>
+    {
+        auto res = int{};
+        auto [ptr, ec] = std::from_chars(str.begin(), str.end(), res);
+
+        if (ec == std::errc())
+        {
+            return res;
+        }
+        spdlog::error("Could not parse string to float.");
+        return std::nullopt;
+    }
 } // namespace renderer::utils
